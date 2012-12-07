@@ -1,6 +1,7 @@
 require 'jruby/core_ext'
 
 java_import Java.jenkins.model.GlobalConfiguration
+java_import Java.java.util.logging.Logger
 
 class GitlabWebHookConfiguration < Java.jenkins.model.GlobalConfiguration
 #class GitlabWebHookConfiguration < Java.hudson.model.Descriptor
@@ -9,6 +10,11 @@ class GitlabWebHookConfiguration < Java.jenkins.model.GlobalConfiguration
   LOGGER = Logger.getLogger(GitlabWebHookConfiguration.class.name)
 
   attr_accessor :conf_param
+
+  def initialize(attributes)
+    LOGGER.info "============= GitlabWebHookConfiguration ================="
+    LOGGER.info attributes.inspect
+  end
 
   def configure_all(*args)
     LOGGER.info "=============================="
@@ -30,7 +36,7 @@ class GitlabWebHookConfiguration < Java.jenkins.model.GlobalConfiguration
   end
 
 
-  def self.getDisplayName()
+  def getDisplayName()
     "Gitlab Web Hook Global Configuration"
   end
 end
