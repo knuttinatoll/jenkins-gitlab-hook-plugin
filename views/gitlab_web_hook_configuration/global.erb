@@ -1,0 +1,13 @@
+<%
+#l = taglib("/lib/layout")
+#t = taglib("/lib/hudson")
+f = taglib("/lib/form")
+f.section(:title => "Gitlab Web Hook") do
+  #f.entry(:title => "param", :field => "conf_param", :description => "description", :help => "help_file_name") do
+  f.entry(:title => "param", :description => "description") do
+    f.textbox(:field => "conf_param")
+    #f.textbox(:field => "conf_param", :value => "#{instance.conf_param}")
+    #f.textbox(:item => "#{instance.conf_param}")
+  end
+end
+%>
