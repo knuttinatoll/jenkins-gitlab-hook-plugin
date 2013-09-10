@@ -3,6 +3,7 @@ require_relative '../exceptions/configuration_exception'
 require_relative '../values/settings'
 require_relative '../values/project'
 require_relative '../services/get_jenkins_projects'
+require_relative '../services/security'
 
 include Java
 
@@ -21,13 +22,16 @@ module GitlabWebHook
     def with(details)
       copy_from = get_project_to_copy_from(details)
       new_project_name = get_new_project_name(copy_from, details)
+      branch_project = nil
 
-      # TODO: set github url, requires github plugin reference
-      branch_project = Java.jenkins.model.Jenkins.instance.copy(copy_from.jenkins_project, new_project_name)
-      branch_project.scm = prepare_scm_from(copy_from.scm, details)
-      branch_project.makeDisabled(false)
-      branch_project.description = Settings.description
-      branch_project.save
+      Security.impersonate(ACL::SYSTEM) do
+          # TODO: set github url, requires github plugin reference
+          branch_project = Java.jenkins.model.Jenkins.instance.copy(copy_from.jenkins_project, new_project_name)
+          branch_project.scm = prepare_scm_from(copy_from.scm, details)
+          branch_project.makeDisabled(false)
+          branch_project.description = Settings.description
+          branch_project.save
+      end
 
       Project.new(branch_project)
     end
