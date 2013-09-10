@@ -72,7 +72,7 @@ module GitlabWebHook
           source_scm.getClean(),
           source_scm.getWipeOutWorkspace(),
           DefaultBuildChooser.new,
-          GitLab.new(details.repository_homepage),
+          GitLab.new(details.repository_homepage, Settings.gitlab_version),
           source_scm.getGitTool,
           source_scm.getAuthorOrCommitter(),
           source_scm.getRelativeTargetDir(),

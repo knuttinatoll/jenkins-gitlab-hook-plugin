@@ -4,11 +4,12 @@ module GitlabWebHook
 
     # TODO: bring this into the UI / project configuration
     # default params should be available, configuration overrides them
-    CREATE_PROJECTS_FOR_NON_MASTER_BRANCHES_AUTOMATICALLY = false
+    CREATE_PROJECTS_FOR_NON_MASTER_BRANCHES_AUTOMATICALLY = true
     MASTER_BRANCH = "master"
-    USE_MASTER_PROJECT_NAME = false
+    USE_MASTER_PROJECT_NAME = true
     DESCRIPTION = "automatically created by Gitlab Web Hook plugin"
     ANY_BRANCH_PATTERN = "**"
+    GITLAB_VERSION = '6.0'
 
     def self.automatic_project_creation?
       CREATE_PROJECTS_FOR_NON_MASTER_BRANCHES_AUTOMATICALLY
@@ -28,6 +29,10 @@ module GitlabWebHook
 
     def self.any_branch_pattern
       ANY_BRANCH_PATTERN
+    end
+
+    def self.gitlab_version
+      GITLAB_VERSION
     end
   end
 end
